@@ -57,7 +57,6 @@ function App() {
                             id="pw-check"
                             type="password"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                            type="password"
                             placeholder="비밀번호 확인을 입력해주세요."
                             autocomplete="off"
                         />
