@@ -16,11 +16,14 @@ function App() {
 
     return (
         <>
-            <Form
-                formState={formState}
-                setFormState={setFormState}
-                modalRef={modalRef}
-            />
+            <section className="form-wrapper">
+                <Form
+                    formState={formState}
+                    setFormState={setFormState}
+                    modalRef={modalRef}
+                />
+                <Footer />
+            </section>
             <FontControlBox />
             <Modal formState={formState} ref={modalRef} />
         </>

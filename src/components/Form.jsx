@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Footer from './Footer'
 import FormInput from './FormInput'
 
 const ERROR_MESSAGE = {
@@ -64,65 +63,62 @@ const Form = ({ formState, setFormState, modalRef }) => {
     }
 
     return (
-        <section className="form-wrapper">
-            <form
-                className="w-full max-w-md m-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-                autoComplete="off"
-                onSubmit={onSubmit}
-                onBlur={handleOnBlur}
-            >
-                <FormInput
-                    id="id"
-                    label="아이디"
-                    inputProps={{
-                        type: 'text',
-                        placeholder: '아이디를 입력해주세요',
-                        required: true,
-                        // autoFocus: true,
-                    }}
-                    formState={formState}
-                    setFormState={setFormState}
-                    errorMessage={errorState.id}
-                    validateInput={validateInput}
+        <form
+            className="w-full max-w-md m-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            autoComplete="off"
+            onSubmit={onSubmit}
+            onBlur={handleOnBlur}
+        >
+            <FormInput
+                id="id"
+                label="아이디"
+                inputProps={{
+                    type: 'text',
+                    placeholder: '아이디를 입력해주세요',
+                    required: true,
+                    // autoFocus: true,
+                }}
+                formState={formState}
+                setFormState={setFormState}
+                errorMessage={errorState.id}
+                validateInput={validateInput}
+            />
+            <FormInput
+                id="pw"
+                label="비밀번호"
+                inputProps={{
+                    type: 'password',
+                    placeholder: '비밀번호를 입력해주세요',
+                    required: true,
+                    autoComplete: 'off',
+                }}
+                formState={formState}
+                setFormState={setFormState}
+                errorMessage={errorState.pw}
+                validateInput={validateInput}
+            />
+            <FormInput
+                id="confirmPw"
+                label="비밀번호 확인"
+                inputProps={{
+                    type: 'password',
+                    placeholder: '비밀번호를 입력해주세요',
+                    required: true,
+                    autoComplete: 'off',
+                }}
+                formState={formState}
+                setFormState={setFormState}
+                errorMessage={errorState.confirmPw}
+                validateInput={validateInput}
+            />
+            <div className="flex justify-center">
+                <input
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-500"
+                    value="가입하기"
                 />
-                <FormInput
-                    id="pw"
-                    label="비밀번호"
-                    inputProps={{
-                        type: 'password',
-                        placeholder: '비밀번호를 입력해주세요',
-                        required: true,
-                        autoComplete: 'off',
-                    }}
-                    formState={formState}
-                    setFormState={setFormState}
-                    errorMessage={errorState.pw}
-                    validateInput={validateInput}
-                />
-                <FormInput
-                    id="confirmPw"
-                    label="비밀번호 확인"
-                    inputProps={{
-                        type: 'password',
-                        placeholder: '비밀번호를 입력해주세요',
-                        required: true,
-                        autoComplete: 'off',
-                    }}
-                    formState={formState}
-                    setFormState={setFormState}
-                    errorMessage={errorState.confirmPw}
-                    validateInput={validateInput}
-                />
-                <div className="flex justify-center">
-                    <input
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-500"
-                        value="가입하기"
-                    />
-                </div>
-            </form>
-            <Footer />
-        </section>
+            </div>
+        </form>
     )
 }
 
