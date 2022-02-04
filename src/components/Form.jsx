@@ -12,6 +12,7 @@ const Form = () => {
                 inputProps={{
                     type: 'text',
                     placeholder: '아이디를 입력해주세요.',
+                    // autoFocus: true,
                 }}
             />
             <FormInput
