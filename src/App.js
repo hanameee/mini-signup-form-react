@@ -17,6 +17,7 @@ export const FormContext = createContext({
 
 function App() {
     const [formData, setFormData] = useState(initialFormData)
+
     return (
         <FormContext.Provider value={{ formData, setFormData }}>
             <section className="form-wrapper">
