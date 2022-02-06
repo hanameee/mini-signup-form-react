@@ -1,6 +1,9 @@
+import { useRef } from 'react'
 import FormInput from './FormInput'
 
 const Form = () => {
+    const passwordRef = useRef(null)
+
     return (
         <form
             className="w-full max-w-md m-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -26,7 +29,7 @@ const Form = () => {
             />
             <FormInput
                 label="비밀번호 확인"
-                id="pw-check"
+                id="confirmPw"
                 inputProps={{
                     type: 'password',
                     placeholder: '비밀번호 확인을 입력해주세요.',

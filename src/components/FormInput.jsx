@@ -1,17 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useContext } from 'react'
+import { FormContext } from '../App'
 
 const ID_REGEX = new RegExp('^[a-z0-9_-]{5,20}$')
+const PW_REGEX = new RegExp('^[a-zA-Z0-9W]{8,16}$')
 
 const FormInput = (props) => {
     const { label, id, inputProps } = props
-    const [value, setValue] = useState('')
     const inputRef = useRef(null)
+    const { formData, setFormData } = useContext(FormContext)
 
     const validateInput = () => {
+        const value = formData[id]
         if (value.length === 0) return 'required'
         switch (id) {
             case 'id':
                 return ID_REGEX.test(value) ? true : 'invalidId'
+            case 'pw':
+                return PW_REGEX.test(value) ? true : 'invalidPw'
+            case 'confirmPw':
+                return value === formData.confirmPw ? true : 'invalidConfirmPw'
             default:
                 return
         }
@@ -36,8 +43,9 @@ const FormInput = (props) => {
                 id={id}
                 ref={inputRef}
                 onBlur={() => console.log(validateInput())}
-                onChange={(e) => setValue(e.target.value)}
-                value={value}
+                onChange={(e) =>
+                    setFormData({ ...formData, [id]: e.target.value })
+                }
                 {...inputProps}
             />
             <div className="mt-1 mb-3 text-xs text-red-500"></div>
