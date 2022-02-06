@@ -10,10 +10,10 @@ const ERROR_MESSAGE = {
 }
 
 const FormInput = (props) => {
-    const { label, id, inputProps, handleOnBlur, errorData } = props
+    const { label, id, inputProps, handleOnBlur, errorState } = props
 
     const inputRef = useRef(null)
-    const { formData, setFormData } = useContext(FormContext)
+    const { formState, setFormData } = useContext(FormContext)
 
     useEffect(() => {
         if (id === 'id') {
@@ -37,12 +37,12 @@ const FormInput = (props) => {
                 ref={inputRef}
                 onBlur={() => handleOnBlur(id)}
                 onChange={(e) =>
-                    setFormData({ ...formData, [id]: e.target.value })
+                    setFormData({ ...formState, [id]: e.target.value })
                 }
                 {...inputProps}
             />
             <div className="mt-1 mb-3 text-xs text-red-500">
-                {errorData[id] !== true && ERROR_MESSAGE[errorData[id]]}
+                {errorState[id] !== true && ERROR_MESSAGE[errorState[id]]}
             </div>
         </div>
     )

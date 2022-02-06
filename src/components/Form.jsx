@@ -11,20 +11,20 @@ const initialErrorData = {
 const ID_REGEX = new RegExp('^[a-z0-9_-]{5,20}$')
 const PW_REGEX = new RegExp('^[a-zA-Z0-9W]{8,16}$')
 
-const Form = () => {
-    const [errorData, setErrorData] = useState(initialErrorData)
-    const { formData } = useContext(FormContext)
+const Form = ({ modalRef }) => {
+    const [errorState, setErrorData] = useState(initialErrorData)
+    const { formState } = useContext(FormContext)
 
     const handleOnBlur = (id) => {
         const validateResult = validateInput(id)
-        setErrorData((errorData) => ({ ...errorData, [id]: validateResult }))
-        if (id === 'pw' && formData.confirmPw) {
+        setErrorData((errorState) => ({ ...errorState, [id]: validateResult }))
+        if (id === 'pw' && formState.confirmPw) {
             handleOnBlur('confirmPw')
         }
     }
 
     const validateInput = (id) => {
-        const value = formData[id]
+        const value = formState[id]
         if (value.length === 0) return 'required'
         switch (id) {
             case 'id':
@@ -32,7 +32,7 @@ const Form = () => {
             case 'pw':
                 return PW_REGEX.test(value) ? true : 'invalidPW'
             case 'confirmPw':
-                return value === formData.pw ? true : 'invalidConfirm'
+                return value === formState.pw ? true : 'invalidConfirm'
             default:
                 return
         }
@@ -40,10 +40,13 @@ const Form = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        const isValid = Object.values(errorData).every(
-            (value) => value === undefined
+        const isValid = Object.values(errorState).every(
+            (value) => value === true
         )
-        console.log(isValid, errorData)
+
+        if (isValid) {
+            modalRef.current.showModal()
+        }
     }
 
     return (
@@ -61,7 +64,7 @@ const Form = () => {
                     // autoFocus: true,
                 }}
                 handleOnBlur={handleOnBlur}
-                errorData={errorData}
+                errorState={errorState}
             />
             <FormInput
                 label="비밀번호"
@@ -72,7 +75,7 @@ const Form = () => {
                     autoComplete: 'off',
                 }}
                 handleOnBlur={handleOnBlur}
-                errorData={errorData}
+                errorState={errorState}
             />
             <FormInput
                 label="비밀번호 확인"
@@ -83,7 +86,7 @@ const Form = () => {
                     autoComplete: 'off',
                 }}
                 handleOnBlur={handleOnBlur}
-                errorData={errorData}
+                errorState={errorState}
             />
             <div className="flex items-center justify-center mt-6">
                 <input
