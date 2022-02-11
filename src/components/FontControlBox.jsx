@@ -5,21 +5,18 @@ const MIN_FONT_SIZE = 12
 
 const $html = document.documentElement
 
-const getBodyFontSize = () => {
-    const bodyFontSize = window
-        .getComputedStyle($html, null)
-        .getPropertyValue('font-size')
-    return parseFloat(bodyFontSize)
+const getHtmlFontSize = () => {
+    return parseFloat(window.getComputedStyle($html).fontSize)
 }
 
 const FontControlBox = () => {
-    const [fontSize, setFontSize] = useState(getBodyFontSize())
-    const onClickFontSizeControl = (flag) => {
+    const [fontSize, setFontSize] = useState(getHtmlFontSize())
+
+    const handleFontSizeControl = (flag) => {
         if (flag === 'increase') {
-            setFontSize((prev) => (prev += 1))
-        }
-        if (flag === 'decrease') {
-            setFontSize((prev) => (prev -= 1))
+            setFontSize((prev) => prev + 1)
+        } else {
+            setFontSize((prev) => prev - 1)
         }
     }
 
@@ -28,18 +25,20 @@ const FontControlBox = () => {
     }, [fontSize])
 
     return (
-        <aside id="font-control-box" className="flex absolute bottom-0 right-0">
+        <aside id="font-control-box" className="flex fixed bottom-0 right-0">
             <button
-                className="bg-white text-gray-500 border border-gray-300 hover:bg-red-50 focus:outline-none focus:shadow-outline disabled:bg-gray-500 disabled:text-white rounded-full"
-                onClick={() => onClickFontSizeControl('increase')}
+                id="increase-font-btn"
+                onClick={() => handleFontSizeControl('increase')}
                 disabled={fontSize >= MAX_FONT_SIZE}
+                className="bg-white text-gray-500 border border-gray-300 hover:bg-red-50 focus:outline-none focus:shadow-outline disabled:bg-gray-500 disabled:text-white rounded-full"
             >
                 +
             </button>
             <button
-                className="bg-white text-gray-500 border border-gray-300 hover:bg-blue-50 focus:outline-none focus:shadow-outline disabled:bg-gray-500 disabled:text-white rounded-full"
-                onClick={() => onClickFontSizeControl('decrease')}
+                id="decrease-font-btn"
                 disabled={fontSize <= MIN_FONT_SIZE}
+                onClick={() => handleFontSizeControl('decrease')}
+                className="bg-white text-gray-500 border border-gray-300 hover:bg-blue-50 focus:outline-none focus:shadow-outline disabled:bg-gray-500 disabled:text-white rounded-full"
             >
                 -
             </button>

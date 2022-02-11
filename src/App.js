@@ -1,32 +1,33 @@
-import { useState, useRef } from 'react'
-import Form from './components/Form'
-import Footer from './components/Footer'
-import FontControlBox from './components/FontControlBox'
-import Modal from './components/Modal'
+import { createContext, useState, useRef } from 'react'
 import './App.css'
+import FontControlBox from './components/FontControlBox'
+import Footer from './components/Footer'
+import Form from './components/Form'
+import Modal from './components/Modal'
+
+const initialFormData = {
+    id: '',
+    pw: '',
+    confirmPw: '',
+}
+
+export const FormContext = createContext({
+    formData: initialFormData,
+    setFormData: () => {},
+})
 
 function App() {
-    const [formState, setFormState] = useState({
-        id: '',
-        pw: '',
-        confirmPw: '',
-    })
-    // Ref: html dialog 태그의 native method를 사용하기 위한 방법
+    const [formData, setFormData] = useState(initialFormData)
     const modalRef = useRef(null)
-
     return (
-        <>
+        <FormContext.Provider value={{ formData, setFormData }}>
             <section className="form-wrapper">
-                <Form
-                    formState={formState}
-                    setFormState={setFormState}
-                    modalRef={modalRef}
-                />
+                <Form modalRef={modalRef} />
                 <Footer />
             </section>
             <FontControlBox />
-            <Modal formState={formState} ref={modalRef} />
-        </>
+            <Modal ref={modalRef} />
+        </FormContext.Provider>
     )
 }
 
